@@ -8,22 +8,37 @@ extern bool solutionConstantPropagation(llvm::Function &);
 
 // The implementation of this function is generated at the end of this file. See
 // INITIALIZE_PASS.
-namespace llvm {
-void initializeYourTurnConstantPropagationPass(PassRegistry &);
+namespace llvm
+{
+  void initializeYourTurnConstantPropagationPass(PassRegistry &);
 };
 
-namespace {
-class YourTurnConstantPropagation /* TODO: Fill in the blanks */ {
-public:
-  YourTurnConstantPropagation() /* TODO: Fill in the blanks */ {}
+namespace
+{
+  class YourTurnConstantPropagation : public FunctionPass
+  {
+  public:
+    static char ID;
+    YourTurnConstantPropagation() : FunctionPass(ID)
+    {
+      initializeYourTurnConstantPropagationPass(*PassRegistry::getPassRegistry());
+    }
 
-  // TODO: Fill in the blanks.
-};
+    bool runOnFunction(Function &fun) override
+    {
+      return solutionConstantPropagation(fun);
+    }
+  };
 } // End anonymous namespace.
 
-// TODO: Remove and add proper implementation
-void llvm::initializeYourTurnConstantPropagationPass(PassRegistry &) {}
+char YourTurnConstantPropagation::ID = 0;
 
-Pass *createYourTurnPassForLegacyPM() {
-  return nullptr; // TODO: Fill in the blanks.
+INITIALIZE_PASS(YourTurnConstantPropagation, "my-cp-legacy", "My Constant Propagation with Legacy Pass", false, false);
+
+Pass *createYourTurnPassForLegacyPM()
+{
+  Pass *myPass = new YourTurnConstantPropagation();
+  return myPass;
 }
+
+

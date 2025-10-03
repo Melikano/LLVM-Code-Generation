@@ -7,4 +7,13 @@ using namespace llvm;
 
 extern bool solutionConstantPropagation(llvm::Function &);
 
-// TODO: Fill in the blanks.
+PreservedAnalyses YourTurnConstantPropagationNewPass::run(Function &fun, FunctionAnalysisManager &fam)
+{
+    bool hasChanged = solutionConstantPropagation(fun);
+
+    if (!hasChanged)
+        return PreservedAnalyses::all();
+
+    PreservedAnalyses pa;
+    return pa;
+}
